@@ -1,45 +1,51 @@
 <template>
-  <div id="main_post">
-    <div id="center_wrapper">
-            <div id="choose_desc_container">
-                <h2>Type of kies een beschrijving</h2>
-                <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview_wrapper">
-                <div v-on:click="desc=desc_preview">{{ desc_preview }}</div>
-                </div>
-                <div id="textarea_wrapper">
-                    <textarea v-model="desc"></textarea>
-                    <p v-on:click="desc=''">X</p>
-                </div>
-            </div>
+  <postlayout>
+    <div id="main_post">
+      <div id="center_wrapper">
+              <div id="choose_desc_container">
+                  <h2>Type of kies een beschrijving</h2>
+                  <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview_wrapper">
+                  <div v-on:click="desc=desc_preview">{{ desc_preview }}</div>
+                  </div>
+                  <div id="textarea_wrapper">
+                      <textarea v-model="desc"></textarea>
+                      <p v-on:click="desc=''">X</p>
+                  </div>
+              </div>
 
-            <div id="linkedin_container">
-                <div class="preview">
-                    <div class="padding_wrapper">
-                        <div class="pf">in</div>
-                        <p class="heading_pf">LinkedIn Preview</p>
-                        <p class="desc" style="white-space: pre-line;" v-html="preview_text(desc)"></p>
-                    </div>
-                    <a v-bind:href="url" target="_blank">
-                    <img v-bind:src=image>
-                    <div class="padding_wrapper" id="image_desc">
-                        <h3>{{link_title}}</h3>
-                        <p>{{url}}</p>
-                    </div>
-                    </a>
-                </div>
-            </div>
-        <button id="share_btn" class="btn center" v-on:click="send_post">Deel op LinkedIn</button>
+              <!-- Preview -->
+              <div id="linkedin_container">
+                  <div class="preview">
+                      <div class="padding_wrapper">
+                          <div class="pf">in</div>
+                          <p class="heading_pf">LinkedIn Preview</p>
+                          <p class="desc" style="white-space: pre-line;" v-html="preview_text(desc)"></p>
+                      </div>
+                      <a v-bind:href="url" target="_blank">
+                      <img v-bind:src=image>
+                      <div class="padding_wrapper" id="image_desc">
+                          <h3>{{link_title}}</h3>
+                          <p>{{url}}</p>
+                      </div>
+                      </a>
+                  </div>
+              </div>
+              <!-- END preview -->
+
+          <button id="share_btn" class="btn center" v-on:click="send_post">Deel op LinkedIn</button>
+          <p id="small_note">Dit gaat om een test en zal niet echt geplaatst worden</p>
+      </div>
     </div>
-  </div>
+  </postlayout>
 </template>
 
 <script>
 import axios from 'axios';
+import postlayout from '../../layouts/post';
 
 export default {
   name: 'main_post',
   created() {
-
     //Check if linkedin is linked
     var access_token = localStorage.getItem('access_token');
     var expire_date = localStorage.getItem('expire_date');
@@ -47,26 +53,26 @@ export default {
 
     var now = new Date();
 
-    if (typeof access_token == "undefined" || access_token == null || 
-        typeof expire_date == "undefined" || expire_date == null || 
-        typeof user_id == "undefined" || user_id == null || 
+    if (typeof access_token == "undefined" || access_token == null ||
+        typeof expire_date == "undefined" || expire_date == null ||
+        typeof user_id == "undefined" || user_id == null ||
         expire_date < now)
     {
         this.$router.push('/activate');
     }
   },
   components: {
-    
+    postlayout
   },
   data: function () {
     return {
-        desc_previews: ['Kom werken bij Valtech als senior digital marketeer! Meer weten? Stuur en berichtje en check de vacaturen > https://lnkd.in/g-yxYDd'
-                            ,'Van strategieën tot roadmaps en campagnes - dat is waar je je als Digital Marketing Consultant bij Valtech mee bezighoudt. Iets voor jou?'
+        desc_previews: ['We zijn op zoek naar #projectmanagers! Onze kantoren in #Amersfoort, #Amsterdam en #Utrecht kunnen jouw hulp goed gebruiken. Solliciteer nu!'
+                            ,'Op zoek naar een geweldige carrièremogelijkheid als projectmanager? Bij Valtech zoeken we jou! Kom langs voor een kop koffie om elkaar beter te leren kennen.'
                             ],
-        desc: 'Van strategieën tot roadmaps en campagnes - dat is waar je je als Digital Marketing Consultant bij Valtech mee bezighoudt. Iets voor jou?',
+        desc: 'Op zoek naar een geweldige carrièremogelijkheid als projectmanager? Bij Valtech zoeken we jou! Kom langs voor een kop koffie om elkaar beter te leren kennen.',
         url: 'https://valtech.com',
         link_title: 'Soliciteer nu!',
-        image: 'https://sem8.martijnfl.nl/wp-content/uploads/2020/03/Contentmanager.jpg',
+        image: 'https://sem8.martijnfl.nl/wp-content/uploads/2020/03/Digitalprojectmanager2.jpg',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
     }
@@ -86,42 +92,18 @@ export default {
         );
     },
     send_post(){
+
         var t = this;
-        
+
         //Share
-        
         var l_post_data = {
             "content": {
                 "contentEntities": [
                     {
-                        "entityLocation": "https://www.martijnfl.nl",
-                        "thumbnails": [
-                            {
-                                "resolvedUrl": t.image
-                            }
-                        ]
-                    }
-                ],
-                "title": "Website tekst"
-            },
-            "distribution": {
-                "linkedInDistributionTarget": {}
-            },
-            "owner": "urn:li:person:" + t.user_id,
-            "subject": "Test Share via an API Subject",
-            "text": {
-                "text": t.desc
-            }
-        };
-
-        l_post_data = {
-            "content": {
-                "contentEntities": [
-                    {   
                         // "description":"Hans",
                         "entityLocation": t.url,
                         "thumbnails": [
-                            {   "imageSpecificContent":{ 
+                            {   "imageSpecificContent":{
                                     "width":1200,
                                     "height":628
                                 },
@@ -144,26 +126,20 @@ export default {
             }
         };
 
-        
-
-        var l_headers = [
-            'Authorization: Bearer ' + t.access_token + '',
-        ];
-
         var post_data = {
             'post': JSON.stringify(l_post_data),
-            'headers': l_headers,
+            'auth_header': 'Bearer ' + t.access_token,
         };
-        
-         
+
         var post_options = {
             method: 'POST',
-            url: 'https://server.martijnfl.nl/test/api_share.php',
+            url: 'https://advocacytool.azurewebsites.net/api/Share_post?code=1N93LnYxYW1otksXUHAu0bdS2IKcrq7AMl6DjLCEfkmZxCl5OGA/KQ==',
+            // url: 'http://localhost:7071/api/HttpTrigger1',
             data: JSON.stringify(post_data),
             json: true
         };
+        // console.log(JSON.stringify(post_data));
 
-   
         axios(post_options)
         .then(function (response) {
             console.log(response);
@@ -181,6 +157,12 @@ export default {
 </script>
 
 <style scoped>
+
+#small_note{
+    font-size: 12px;
+    color: rgb(107, 107, 107);
+    font-style: oblique;
+}
 
 #main_post {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -240,7 +222,7 @@ export default {
 
 #choose_desc_container textarea{
     width: 100%;
-    min-height: 120px;
+    min-height: 140px;
     max-width: 100%;
 }
 
@@ -270,16 +252,16 @@ export default {
 
 }
 
-/* @media screen and (max-width: 1295px) {
+@media screen and (max-width: 1295px) {
 
-    #linkedin_container{
+    /* #linkedin_container{
         max-width: 400px;
         position: static;
         right: 0;
         margin-top: 50px;
-    }
+    } */
 
-} */
+}
 
 #linkedin_container .preview{
    box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.81);
@@ -297,7 +279,7 @@ export default {
 }
 
 #linkedin_container a{
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 #linkedin_container #image_desc h3{

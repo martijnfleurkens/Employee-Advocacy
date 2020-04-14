@@ -1,0 +1,34 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* HTML reset */
+html,
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+/* Pre-defined styles */
+.btn{
+  font-size: 16px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px 60px;
+    cursor: pointer;
+    transition: 0.5s all ease-in-out;
+    font-weight: bold;
+}
+
+.btn:hover{
+    background-color: #00C8FF;
+    transition: 0.3s all ease-in-out;
+}
+
+.btn.center{
+  display: table;
+  margin: auto;
+}
