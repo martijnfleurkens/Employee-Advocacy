@@ -22,7 +22,7 @@
   width: 650px;
   margin: auto;
   height: 100%;
-  position: relative;
+  /* position: relative; */
 }
 
 #focus_wrapper .logo{

@@ -14,26 +14,11 @@
               </div>
 
               <!-- Preview -->
-              <div id="linkedin_container">
-                  <div class="preview">
-                      <div class="padding_wrapper">
-                          <div class="pf">in</div>
-                          <p class="heading_pf">LinkedIn Preview</p>
-                          <p class="desc" style="white-space: pre-line;" v-html="preview_text(desc)"></p>
-                      </div>
-                      <a v-bind:href="url" target="_blank">
-                      <img v-bind:src=image>
-                      <div class="padding_wrapper" id="image_desc">
-                          <h3>{{link_title}}</h3>
-                          <p>{{url}}</p>
-                      </div>
-                      </a>
-                  </div>
-              </div>
+              <postexample :desc="desc" :url="url" :image="image" :link_title="link_title"></postexample>
               <!-- END preview -->
 
           <button id="share_btn" class="btn center" v-on:click="send_post">Deel op LinkedIn</button>
-          <p id="small_note">Dit gaat om een test en zal niet echt geplaatst worden</p>
+          <p id="small_note"></p>
       </div>
     </div>
   </postlayout>
@@ -42,10 +27,16 @@
 <script>
 import axios from 'axios';
 import postlayout from '../../layouts/post';
+import postexample from '../../components/post_example';
+// import qs from 'qs';
 
 export default {
   name: 'main_post',
-  created() {
+  async created() {
+
+    var id = this.$route.params.id;
+    localStorage.setItem('post_id',id);
+
     //Check if linkedin is linked
     var access_token = localStorage.getItem('access_token');
     var expire_date = localStorage.getItem('expire_date');
@@ -59,38 +50,48 @@ export default {
         expire_date < now)
     {
         this.$router.push('/activate');
+    } else {
+
+      axios.defaults.headers.common.authorization = null;
+      var rq_post_options = {
+        method: 'POST',
+        headers: {'header':{
+          'authorization': null
+        }},
+        url: 'https://prod-16.westeurope.logic.azure.com:443/workflows/74c7afaf5f4247f6970f27df9da8dd0c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tbLWes7w7a9YPDokj6gCySMztvzc9a6RomZiCGmSGJ8',
+        // data: qs.stringify({"id":id}),
+        data: {"id":id}
+      };
+
+      try {
+        const response = await axios(rq_post_options);
+        console.log(response);
+
+        var db_data = response.data.Documents[0]
+        this.desc_previews = db_data['desc'];
+        this.url = db_data['url'];
+        this.link_title = db_data['link_title'];
+        this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
+
+      } catch(e) { console.error(e); }
     }
   },
   components: {
-    postlayout
+    postlayout,
+    postexample
   },
   data: function () {
     return {
-        desc_previews: ['We zijn op zoek naar #projectmanagers! Onze kantoren in #Amersfoort, #Amsterdam en #Utrecht kunnen jouw hulp goed gebruiken. Solliciteer nu!'
-                            ,'Op zoek naar een geweldige carrièremogelijkheid als projectmanager? Bij Valtech zoeken we jou! Kom langs voor een kop koffie om elkaar beter te leren kennen.'
-                            ],
-        desc: 'Op zoek naar een geweldige carrièremogelijkheid als projectmanager? Bij Valtech zoeken we jou! Kom langs voor een kop koffie om elkaar beter te leren kennen.',
-        url: 'https://valtech.com',
-        link_title: 'Soliciteer nu!',
-        image: 'https://sem8.martijnfl.nl/wp-content/uploads/2020/03/Digitalprojectmanager2.jpg',
+        desc_previews: [''],
+        desc: '',
+        url: '',
+        link_title: '',
+        image: '',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
     }
   },
   methods:{
-    //Convert text link to html link
-    preview_text(x){
-        return (x || "").replace(
-            /([^\S]|^)(((https?:\/\/)|(www\.))(\S+))/gi,
-            function(match, space, url){
-                var hyperlink = url;
-                if (!hyperlink.match('^https?:')) {
-                    hyperlink = 'http://' + hyperlink;
-                }
-                return space + '<a href="' + hyperlink + '">' + url + '</a>';
-            }
-        );
-    },
     send_post(){
 
         var t = this;
@@ -125,6 +126,7 @@ export default {
                 "text": t.desc
             }
         };
+
 
         var post_data = {
             'post': JSON.stringify(l_post_data),
@@ -226,102 +228,6 @@ export default {
     max-width: 100%;
 }
 
-#linkedin_container{
-   max-width: 500px;
-   display: inline-block;
-   position: absolute;
-   right: -600px;
-   margin-top: 50px;
-}
-
-@media screen and (max-width: 1900px) {
-
-    #linkedin_container{
-        right: -450px;
-        max-width: 400px;
-    }
-
-}
-
-@media screen and (max-width: 1590px) {
-
-    #linkedin_container{
-        right: -320px;
-        max-width: 300px;
-    }
-
-}
-
-@media screen and (max-width: 1295px) {
-
-    /* #linkedin_container{
-        max-width: 400px;
-        position: static;
-        right: 0;
-        margin-top: 50px;
-    } */
-
-}
-
-#linkedin_container .preview{
-   box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.81);
-   text-align: left;
-   padding: 0px;
-   background-color: white;
-}
-
-#linkedin_container .padding_wrapper{
-    padding: 20px;
-}
-
-#linkedin_container #image_desc{
-    background: #F3F6F8;
-}
-
-#linkedin_container a{
-    text-decoration: none;
-}
-
-#linkedin_container #image_desc h3{
-    color: #191919;
-    padding: 0; margin: 0;
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-#linkedin_container #image_desc p{
-    color: #7D7F80;
-    padding: 0; margin: 0;
-    font-size: 16px;
-}
-
-
-#linkedin_container .pf{
-    background-color: #F1F5F8;
-    display: inline-block;
-    border-radius: 50px;
-    padding: 15px;
-    font-size: 20px;
-    font-weight: bold;
-
-}
-
-#linkedin_container .heading_pf{
-    display: inline-block;
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-#linkedin_container .desc{
-    min-height: 40px;
-    max-width: 100%;
-    word-wrap: break-word;
-    margin-bottom: 0px;
-}
-
-#linkedin_container img{
-    width: 100%;
-}
 
 #share_btn{
     margin-top: 20px;

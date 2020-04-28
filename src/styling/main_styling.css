@@ -28,6 +28,14 @@ body {
     transition: 0.3s all ease-in-out;
 }
 
+.btn.blue{
+  background-color: #00C8FF;
+}
+
+.btn.blue:hover{
+  background-color: black;
+}
+
 .btn.center{
   display: table;
   margin: auto;

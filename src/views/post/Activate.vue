@@ -40,7 +40,8 @@ export default {
         localStorage.setItem('user_id', user_id);
 
         //Redirect to post
-        t.$router.push('/');
+        var post_id = localStorage.getItem('post_id');
+        t.$router.push('/post/' + post_id);
       });
     },
   },

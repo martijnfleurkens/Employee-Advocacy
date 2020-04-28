@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
+import store from './store';
 
 //Templates
 import App from './views/App.vue'
@@ -15,6 +16,8 @@ import App from './views/App.vue'
 
   //Dashboard routes
   import Dashboard_home from './views/dashboard/Home.vue'
+  import new_proposal from './views/dashboard/New_proposal.vue'
+  import new_mail from './views/dashboard/New_mail.vue'
 
 Vue.config.productionTip = false
 
@@ -22,9 +25,11 @@ Vue.config.productionTip = false
 Vue.use(VueRouter);
 const routes = [
   { path: '/activate', component: Activate },
-  { path: '/', component: Post },
+  { path: '/post/:id', component: Post },
   { path: '/thank_you', component: Thank_you },
   { path: '/dashboard', component: Dashboard_home },
+  { path: '/dashboard/new_proposal', component: new_proposal },
+  { path: '/dashboard/new_mail', component: new_mail },
 ];
 
 const router = new VueRouter({
@@ -62,5 +67,6 @@ Vue.use(VueAuthenticate, {
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });
