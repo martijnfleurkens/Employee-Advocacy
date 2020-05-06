@@ -1,10 +1,8 @@
 <template>
   <postlayout>
     <div id="main_activate">
-        <!-- <h1>Je bericht is geplaatst<br>
-            Dankjewel!</h1> -->
-            <h1>Dankjewel voor het meedoen aan deze test!</h1>
-            <p>Deze week zal je een korte enquete van ongeveer 1 minuut ontvangen. Graag zou ik je willen vragen om deze in te vullen</p>
+        <h1>Your post has been successfully shared on LinkedIn<br><br>
+            Thank you!</h1>
     </div>
   </postlayout>
 </template>

@@ -1,27 +1,33 @@
 <template>
+<div id="post_wrapper">
   <postlayout>
     <div id="main_post">
       <div id="center_wrapper">
               <div id="choose_desc_container">
-                  <h2>Type of kies een beschrijving</h2>
-                  <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview_wrapper">
-                  <div v-on:click="desc=desc_preview">{{ desc_preview }}</div>
+                  <p>Choose a description</p>
+                  <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview"  v-on:click="change_desc(desc_preview)">
+                    {{ desc_preview }}
                   </div>
-                  <div id="textarea_wrapper">
+                  <div v-on:click="change_desc('')" id="desc_preview"></div>
+
+                  <p>Edit the text or make it your own</p>
+                  <div id="desc_edit">
                       <textarea v-model="desc"></textarea>
-                      <p v-on:click="desc=''">X</p>
+                      <!-- <p v-on:click="desc=''">X</p> -->
                   </div>
               </div>
 
-              <!-- Preview -->
-              <postexample :desc="desc" :url="url" :image="image" :link_title="link_title"></postexample>
-              <!-- END preview -->
 
-          <button id="share_btn" class="btn center" v-on:click="send_post">Deel op LinkedIn</button>
+
+          <button id="share_btn" class="btn center" v-on:click="send_post">Share on LinkedIn</button>
           <p id="small_note"></p>
       </div>
     </div>
   </postlayout>
+    <!-- Preview -->
+    <postexample :desc="desc" :url="url" :image="image" :link_title="link_title"></postexample>
+    <!-- END preview -->
+  </div>
 </template>
 
 <script>
@@ -92,6 +98,9 @@ export default {
     }
   },
   methods:{
+    change_desc(desc_preview){
+        this.desc=desc_preview;
+    },
     send_post(){
 
         var t = this;
@@ -158,7 +167,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+
+#post_wrapper{
+  max-width: 600px;
+}
+
+#post_wrapper #focus_wrapper{
+  margin-right: 600px;
+}
+
+@media screen and (max-width: 1150px) {
+
+    #post_wrapper #focus_wrapper{
+        margin-right: 450px
+    }
+
+}
 
 #small_note{
     font-size: 12px;
@@ -184,14 +209,15 @@ export default {
     text-align: left;
 }
 
-#choose_desc_container h2{
+#choose_desc_container p{
     text-align: center;
-    font-size: 21px;
-    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 45px;
+    margin-bottom: 15px;
 }
 
-#desc_preview_wrapper,
-#choose_desc_container textarea{
+#desc_preview{
     border: 1px dashed #a3a3a3;
     color: #707070;
     padding: 15px;
@@ -199,9 +225,16 @@ export default {
     margin-bottom: 10px;
     box-sizing: border-box;
     background-color: white;
+    user-select: none;
 }
 
-#desc_preview_wrapper:hover{
+#choose_desc_container textarea{
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+#desc_preview:hover{
     border: 1px solid #a3a3a3;
     cursor: pointer;
 }

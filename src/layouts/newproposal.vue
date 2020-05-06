@@ -40,7 +40,6 @@ input[type="submit"]{
 
 #content_wrapper{
   background: white;
-  /* box-sizing: border-box; */
   height: 80%;
   padding: 60px 80px;
   overflow: auto
@@ -65,7 +64,6 @@ input[type="submit"]{
 footer{
   position: absolute;
   bottom: 20px;
-  /* width: 100% */
 }
 
 footer .logo{

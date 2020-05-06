@@ -15,7 +15,8 @@ import App from './views/App.vue'
   import Thank_you from './views/post/Thank_you.vue'
 
   //Dashboard routes
-  import Dashboard_home from './views/dashboard/Home.vue'
+  import Login from './views/dashboard/Login.vue'
+  import dashboard from './views/dashboard/Home.vue'
   import new_proposal from './views/dashboard/New_proposal.vue'
   import new_mail from './views/dashboard/New_mail.vue'
 
@@ -27,10 +28,18 @@ const routes = [
   { path: '/activate', component: Activate },
   { path: '/post/:id', component: Post },
   { path: '/thank_you', component: Thank_you },
-  { path: '/dashboard', component: Dashboard_home },
-  { path: '/dashboard/new_proposal', component: new_proposal },
-  { path: '/dashboard/new_mail', component: new_mail },
+  { path: '/dashboard', component: dashboard, name: "dashboard", beforeEnter: (to, from, next) => {routerprotec(to,from,next);}},
+  { path: '/dashboard/login', component: Login },
+  { path: '/', component: Login },
+  { path: '/dashboard/new_proposal', component: new_proposal, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
+  { path: '/dashboard/new_mail', component: new_mail, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
 ];
+
+function routerprotec(to,from,next){
+  if(store.state.authentication.authenticated == false) {
+    next(false);
+  } else { next(); }
+}
 
 const router = new VueRouter({
   routes,

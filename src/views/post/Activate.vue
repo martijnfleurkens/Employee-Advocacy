@@ -1,7 +1,18 @@
 <template>
   <postlayout>
     <div id="main_activate">
-        <button @click="authenticate('linkedin')" class="btn">Linkedin Koppelen</button>
+        <h1>Connect with linkedin to view the message</h1>
+        <button @click="authenticate('linkedin')" class="btn"><span class="icon_linkedin"></span> Connect with LinkedIn</button>
+        <p id="sub_text">Don't worry, no message is being posted yet</p>
+
+        <div class="readmore">
+          <input type="checkbox" id="showmore"/>
+          <label for="showmore">What's going to happen with this LinkedIn connection?</label>
+          <p>
+           This link with LinkedIn will only be used to post when you do this yourself.
+          </p>
+        </div>
+
     </div>
   </postlayout>
 </template>
@@ -50,7 +61,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #main_activate {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,5 +70,22 @@ export default {
   color: #2c3e50;
   padding-top: 30vh;
   padding-bottom: 30vh;
+}
+
+#main_activate .btn{
+  background-color: #0077B5;
+}
+
+#main_activate .btn:hover{
+  background-color: black;
+}
+
+.readmore{
+  margin-top: 30px;
+}
+
+#sub_text{
+  margin-top: 6px;
+  color: #7D8892;
 }
 </style>

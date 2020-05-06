@@ -48,11 +48,10 @@
    top: 10vh;
 }
 
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1150px) {
 
     #linkedin_container{
-        /* right: -450px; */
-        /* max-width: 400px; */
+        max-width: 350px
     }
 
 }

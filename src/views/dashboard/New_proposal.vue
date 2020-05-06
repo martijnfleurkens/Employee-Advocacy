@@ -64,7 +64,6 @@ export default {
         preview_desc: '',
         url: '',
         link_title: '',
-        // image: '/img/valtech_logo.png',
         image: require('../../assets/preview.png'),
         image_data: '',
         access_token: localStorage.getItem('access_token'),
