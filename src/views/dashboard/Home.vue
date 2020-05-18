@@ -35,8 +35,10 @@ export default {
       var post_options = {
         method: 'POST',
         url: 'https://prod-47.westeurope.logic.azure.com:443/workflows/40c039c923cb4daa8899e8c4275b3e69/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_VGpYb-UlchrQxhaDwbDcAmJfJtQATuej5YtsLG1wio',
-        // data: fd,
-        // json: true
+        data: {
+              "token": localStorage.getItem('token')
+            },
+        json: true
       };
 
       try {

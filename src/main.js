@@ -31,6 +31,7 @@ const routes = [
   { path: '/dashboard', component: dashboard, name: "dashboard", beforeEnter: (to, from, next) => {routerprotec(to,from,next);}},
   { path: '/dashboard/login', component: Login },
   { path: '/', component: Login },
+  { path: '', component: Login },
   { path: '/dashboard/new_proposal', component: new_proposal, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
   { path: '/dashboard/new_mail', component: new_mail, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
 ];
@@ -65,7 +66,7 @@ Vue.use(VueAuthenticate, {
       },
       // url: '/api/HttpTrigger1',
       url: '/api/Authentication?code=1yxSUhXyFDhabdnw5MUTf2IaR8g2HydquCWyZTzlrE/siYmJkMSYGQ==',
-      scope:['r_liteprofile','r_emailaddress','w_member_social'],
+      scope:['r_liteprofile','r_emailaddress','w_member_social','r_member_social'],
       // optionalUrlParams: ['scope', 'state', 'url']
       optionalUrlParams: ['scope', 'state']
     }

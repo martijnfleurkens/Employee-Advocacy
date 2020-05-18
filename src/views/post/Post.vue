@@ -19,7 +19,7 @@
 
 
 
-          <button id="share_btn" class="btn center" v-on:click="send_post">Share on LinkedIn</button>
+          <button id="share_btn" class="btn center" v-on:click="send_post" v-html="button_text"></button>
           <p id="small_note"></p>
       </div>
     </div>
@@ -95,6 +95,7 @@ export default {
         image: '',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
+        button_text: 'Share on LinkedIn'
     }
   },
   methods:{
@@ -104,6 +105,7 @@ export default {
     send_post(){
 
         var t = this;
+        t.button_text = '<div class="loader"></div>';
 
         //Share
         var l_post_data = {
@@ -168,22 +170,6 @@ export default {
 </script>
 
 <style>
-
-#post_wrapper{
-  max-width: 600px;
-}
-
-#post_wrapper #focus_wrapper{
-  margin-right: 600px;
-}
-
-@media screen and (max-width: 1150px) {
-
-    #post_wrapper #focus_wrapper{
-        margin-right: 450px
-    }
-
-}
 
 #small_note{
     font-size: 12px;

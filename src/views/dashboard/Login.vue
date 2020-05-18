@@ -42,8 +42,10 @@ export default {
 
         axios(post_options)
         .then(function (response) {
-            if (response.token != 'undefined'){
-              localStorage.setItem('token', response.token);
+            if (typeof response.data.token != 'undefined'){
+              console.log(response);
+              console.log(response.data.token);
+              localStorage.setItem('token', response.data.token);
               current.$store.commit("setAuthentication", true);
               current.$router.replace({ name: "dashboard" });
             }

@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 
 #post_template {
   text-align: center;
@@ -30,5 +30,24 @@
   height: 40px;
   margin: auto;
 }
+
+/* If post {*/
+
+@media screen and (max-width: 1900px) {
+
+  #post_wrapper #focus_wrapper{
+    margin-right: 600px;
+  }
+
+}
+
+@media screen and (max-width: 1150px) {
+
+    #post_wrapper #focus_wrapper{
+        margin-right: 450px
+    }
+
+}
+/*} END If post*/
 
 </style>

@@ -1,38 +1,49 @@
 <template>
-  <postlayout>
-    <div id="main_activate">
-        <h1>Connect with linkedin to view the message</h1>
-        <button @click="authenticate('linkedin')" class="btn"><span class="icon_linkedin"></span> Connect with LinkedIn</button>
-        <p id="sub_text">Don't worry, no message is being posted yet</p>
+  <div id="post_wrapper" class="activate_page">
+    <postlayout>
+      <div id="main_activate">
+          <h1>Connect with linkedin to view the message</h1>
+          <button @click="authenticate('linkedin')" class="btn" v-html="button_text"></button>
+          <p id="sub_text">Don't worry, no message is being posted yet</p>
 
-        <div class="readmore">
-          <input type="checkbox" id="showmore"/>
-          <label for="showmore">What's going to happen with this LinkedIn connection?</label>
-          <p>
-           This link with LinkedIn will only be used to post when you do this yourself.
-          </p>
-        </div>
+          <div class="readmore">
+            <input type="checkbox" id="showmore"/>
+            <label for="showmore">What's going to happen with this LinkedIn connection?</label>
+            <p>
+            This link with LinkedIn will only be used to post when you do this yourself.
+            </p>
+          </div>
 
-    </div>
-  </postlayout>
+      </div>
+    </postlayout>
+    <!-- Preview -->
+    <postexample :image="post_image"></postexample>
+    <!-- END preview -->
+  </div>
 </template>
 
 <script>
 import postlayout from '../../layouts/post';
+import postexample from '../../components/post_example';
 
 export default {
   name: 'main_activate',
   components: {
-    postlayout
+    postlayout,
+    postexample
   },
   data: function () {
     return {
         access_token: '',
+        button_text: '<i class="icon_linkedin"> </i> Connect with LinkedIn',
+        post_image: require('../../assets/activate.png')
     }
   },
   methods:{
     authenticate: function(provider) {
       var t = this;
+      t.button_text = '<div class="loader"></div>';
+
       this.$auth.authenticate(provider).then( function ( response ) {
         // Execute application logic after successful social authentication
         console.log(response);
@@ -57,11 +68,10 @@ export default {
     },
   },
 }
-
-
 </script>
 
-<style scoped>
+<style>
+
 #main_activate {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -87,5 +97,9 @@ export default {
 #sub_text{
   margin-top: 6px;
   color: #7D8892;
+}
+
+.activate_page #linkedin_container{
+  opacity: 0.5;
 }
 </style>
