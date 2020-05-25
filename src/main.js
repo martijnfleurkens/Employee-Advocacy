@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import store from './store';
+import VueGtag from "vue-gtag";
 
 //Templates
 import App from './views/App.vue'
@@ -28,24 +29,27 @@ const routes = [
   { path: '/activate', component: Activate },
   { path: '/post/:id', component: Post },
   { path: '/thank_you', component: Thank_you },
-  { path: '/dashboard', component: dashboard, name: "dashboard", beforeEnter: (to, from, next) => {routerprotec(to,from,next);}},
-  { path: '/dashboard/login', component: Login },
+  { path: '/dashboard', component: dashboard, name: "dashboard", meta: { auth: true } },
+  { path: '/login', component: Login },
   { path: '/', component: Login },
   { path: '', component: Login },
-  { path: '/dashboard/new_proposal', component: new_proposal, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
-  { path: '/dashboard/new_mail', component: new_mail, beforeEnter: (to, from, next) => {routerprotec(to,from,next);} },
+  { path: '/dashboard/new_proposal', component: new_proposal, meta: { auth: true } },
+  { path: '/dashboard/new_mail', component: new_mail, meta: { auth: true } },
 ];
-
-function routerprotec(to,from,next){
-  if(store.state.authentication.authenticated == false) {
-    next(false);
-  } else { next(); }
-}
 
 const router = new VueRouter({
   routes,
   mode: 'history',
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && store.state.authentication.authenticated == false) {
+    next('/login')
+  }
+  else {
+    next()
+  }
+})
 
 //Axios
 Vue.use(VueAxios, axios);
@@ -62,16 +66,21 @@ Vue.use(VueAuthenticate, {
       clientId: '86h220n2vlk99q',
       redirectUri: 'http://localhost:8080/activate', // Your client app URL
       state: function () {
-        return '!o!HH-Q991dF';//new Date().getTime().toString();
+        return '!o!HH-Q991dF';
       },
       // url: '/api/HttpTrigger1',
       url: '/api/Authentication?code=1yxSUhXyFDhabdnw5MUTf2IaR8g2HydquCWyZTzlrE/siYmJkMSYGQ==',
-      scope:['r_liteprofile','r_emailaddress','w_member_social','r_member_social'],
+      scope:['r_liteprofile','r_emailaddress','w_member_social'], //r_member_social
       // optionalUrlParams: ['scope', 'state', 'url']
       optionalUrlParams: ['scope', 'state']
     }
   }
 })
+
+//Gtag
+Vue.use(VueGtag, {
+  config: { id: "UA-167521106-1" }
+}, router);
 
 //Start Vue
 new Vue({

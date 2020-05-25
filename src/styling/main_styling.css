@@ -113,3 +113,29 @@ body {
 #showmore:checked ~ p {
   display: block;
 }
+
+/* Radiowrapper */
+.radio_wrapper{
+  width: 100%;
+  display: flex;
+}
+
+.radio_wrapper input[type="radio"]{
+  display: none;
+}
+
+.radio_wrapper label{
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 2px 8px;
+  padding-top: 4px;
+}
+
+.radio_wrapper input[type="radio"]:checked + label{
+  background-color: black;
+  color: white;
+}
+/*END Radiowrapper*/

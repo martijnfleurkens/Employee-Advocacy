@@ -30,6 +30,16 @@
             <div v-for="(desc, index) of desc_previews" v-bind:key="desc.index" class="textarea_wrapper">
               <textarea cols="37" rows="7" v-model="desc.text" v-on:focus="preview_desc_func(index)" v-on:keyup="preview_desc_func(index)" required></textarea>
               <button v-on:click="removeTextarea(index)" class="cross">X</button>
+
+                <!-- Language labels -->
+                <div class="radio_wrapper">
+                  <input type="radio" v-bind:name=" 'language_' + index" value="en" v-bind:id=" 'en_' + index" v-model="desc.language" checked>
+                  <label v-bind:for=" 'en_' + index">EN</label><br>
+
+                  <input type="radio" v-bind:name=" 'language_' + index"  value="nl" v-bind:id=" 'nl_' + index" v-model="desc.language">
+                  <label v-bind:for=" 'nl_' + index">NL</label><br>
+                </div>
+                <!-- END Language labels -->
             </div>
           <P v-on:click="addTextarea" id="add_btntext">+ Add proposal</P>
         </div>
@@ -58,7 +68,7 @@ export default {
   data: function () {
     return {
         desc_previews: [
-          { text: "" }
+          { text: "", language:"" }
         ],
         subject: '',
         preview_desc: '',
@@ -109,17 +119,21 @@ export default {
       fd.append('link_title', this.link_title);
 
       var db_desc = '';
+      var db_language = '';
       var first = true;
       this.desc_previews.forEach(desc => {
         if (!first){
            db_desc += '<39587_split>';
+           db_language += '<39587_split>';
         }
         first=false;
 
         db_desc += desc['text'];
+        db_language += desc['language'];
 
       });
       fd.append('desc', db_desc);
+      fd.append('language', db_language);
 
       this.ADD_FORMDATA(fd);
 

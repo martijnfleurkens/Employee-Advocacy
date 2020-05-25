@@ -5,10 +5,22 @@
       <div id="center_wrapper">
               <div id="choose_desc_container">
                   <p>Choose a description</p>
-                  <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview"  v-on:click="change_desc(desc_preview)">
-                    {{ desc_preview }}
-                  </div>
-                  <div v-on:click="change_desc('')" id="desc_preview"></div>
+                      <!-- Language labels -->
+                      <div class="radio_wrapper">
+                        <input type="radio" name="language" id="en" checked v-on:change="select_language('en')">
+                        <label for="en">EN</label><br>
+
+                        <input type="radio" name="language" id="nl" v-on:change="select_language('nl')">
+                        <label for="nl">NL</label><br>
+                      </div>
+                      <!-- END Language labels -->
+
+                    <!-- Descriptions -->
+                    <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview" v-on:click="change_desc(desc_preview)">
+                      {{ desc_preview }}
+                    </div>
+                    <div v-on:click="change_desc('')" id="desc_preview"></div>
+                    <!-- END Descriptions -->
 
                   <p>Edit the text or make it your own</p>
                   <div id="desc_edit">
@@ -74,7 +86,7 @@ export default {
         console.log(response);
 
         var db_data = response.data.Documents[0]
-        this.desc_previews = db_data['desc'];
+        this.db_desc_previews = db_data['desc'];
         this.url = db_data['url'];
         this.link_title = db_data['link_title'];
         this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
@@ -88,19 +100,39 @@ export default {
   },
   data: function () {
     return {
-        desc_previews: [''],
+        // desc_previews: [],
+        db_desc_previews: {},
         desc: '',
         url: '',
         link_title: '',
         image: '',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
-        button_text: 'Share on LinkedIn'
+        button_text: 'Share on LinkedIn',
+        language: 'en'
+    }
+  },
+  computed: {
+    desc_previews: function(){
+      var t = this;
+      var return_val = [];
+      var descobj = t.db_desc_previews
+
+      Object.keys(t.db_desc_previews).map(function(objectKey) {
+          if (t.language == descobj[objectKey]['language']){
+          return_val.push(descobj[objectKey]['content']);
+        }
+      });
+
+      return return_val;
     }
   },
   methods:{
     change_desc(desc_preview){
         this.desc=desc_preview;
+    },
+    select_language(value){
+      this.language = value;
     },
     send_post(){
 
@@ -250,6 +282,10 @@ export default {
 
 #share_btn{
     margin-top: 20px;
+}
+
+#post_wrapper .radio_wrapper{
+  margin-bottom: 10px;
 }
 
 </style>
