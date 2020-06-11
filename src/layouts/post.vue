@@ -2,7 +2,9 @@
   <div id="post_template">
       <div id="focus_wrapper">
         <slot/>
-        <img src="../assets/valtech_logo.png" alt="Logo" class="logo">
+        <div class="footer">
+          <img src="../assets/valtech_logo.png" alt="Logo" class="logo">
+        </div>
       </div>
   </div>
 </template>
@@ -26,10 +28,20 @@
   /* margin-right: 600px; */
 }
 
+#focus_wrapper .footer{
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+  z-index: 0;
+}
+
 #focus_wrapper .logo{
   height: 40px;
   margin: auto;
 }
+
+
 
 /* If post {*/
 
@@ -39,6 +51,16 @@
     margin-right: 600px;
   }
 
+  #focus_wrapper .logo{
+    float: right;
+  }
+
+}
+
+@media screen and (max-height: 780px) {
+  #focus_wrapper .logo{
+      float: right;
+    }
 }
 
 @media screen and (max-width: 1150px) {

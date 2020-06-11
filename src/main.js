@@ -56,7 +56,6 @@ Vue.use(VueAxios, axios);
 
 //VueAuthenticate
 Vue.use(VueAuthenticate, {
-  // baseUrl: 'http://localhost:7071', // Your API domain
   baseUrl: 'https://advocacytool.azurewebsites.net', // Your API domain
   tokenName: 'access_token',
   tokenPath: 'access_token',
@@ -64,7 +63,7 @@ Vue.use(VueAuthenticate, {
   providers: {
     linkedin: {
       clientId: '86h220n2vlk99q',
-      redirectUri: 'http://localhost:8080/activate', // Your client app URL
+      redirectUri: 'https://valtech.ga/activate', // Your client app URL
       state: function () {
         return '!o!HH-Q991dF';
       },

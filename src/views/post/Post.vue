@@ -19,10 +19,11 @@
                     <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview" v-on:click="change_desc(desc_preview)">
                       {{ desc_preview }}
                     </div>
-                    <div v-on:click="change_desc('')" id="desc_preview"></div>
+                    <!-- <div v-on:click="change_desc('')" id="desc_preview"></div> -->
                     <!-- END Descriptions -->
 
-                  <p>Edit the text or make it your own</p>
+                  <!-- <p>Edit the text or make it your own</p> -->
+                  <p>Edit the description or write your own</p>
                   <div id="desc_edit">
                       <textarea v-model="desc"></textarea>
                       <!-- <p v-on:click="desc=''">X</p> -->
@@ -179,7 +180,6 @@ export default {
         var post_options = {
             method: 'POST',
             url: 'https://advocacytool.azurewebsites.net/api/Share_post?code=1N93LnYxYW1otksXUHAu0bdS2IKcrq7AMl6DjLCEfkmZxCl5OGA/KQ==',
-            // url: 'http://localhost:7071/api/HttpTrigger1',
             data: JSON.stringify(post_data),
             json: true
         };
@@ -215,7 +215,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   height: 80%;
   text-align: center;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
 }
