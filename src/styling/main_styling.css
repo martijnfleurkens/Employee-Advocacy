@@ -1,0 +1,141 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* HTML reset */
+html,
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+/* Fonts */
+@font-face {
+  font-family: 'clientfont';
+  src:
+    url('../assets/fonts/clientfont/clientfont.ttf?fwwfxy') format('truetype'),
+    url('../assets/fonts/clientfont/clientfont.woff?fwwfxy') format('woff'),
+    url('../assets/fonts/clientfont/clientfont.svg?fwwfxy#clientfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon_"], [class*=" icon_"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'clientfont' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon_linkedin:before {
+  content: "\e903";
+}
+
+/* Pre-defined styles */
+.loader {
+  border: 6px solid gray;
+  border-radius: 50%;
+  border-top: 6px solid white;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn{
+  font-size: 16px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px 60px;
+    cursor: pointer;
+    transition: 0.5s all ease-in-out;
+    font-weight: bold;
+}
+
+.btn:hover{
+    background-color: #00C8FF;
+    transition: 0.3s all ease-in-out;
+}
+
+.btn.blue{
+  background-color: #00C8FF;
+}
+
+.btn.blue:hover{
+  background-color: black;
+}
+
+.btn.center{
+  display: table;
+  margin: auto;
+}
+
+/* Show more */
+.readmore p {
+  display: none;
+}
+
+.readmore > label {
+  position: relative;
+  padding: 3px;
+  user-select: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.readmore input[type="checkbox"] {
+  display: none;
+}
+
+#showmore:checked ~ p {
+  display: block;
+}
+
+/* Radiowrapper */
+.radio_wrapper{
+  width: 100%;
+  display: flex;
+}
+
+.radio_wrapper input[type="radio"]{
+  display: none;
+}
+
+.radio_wrapper label{
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 2px 8px;
+  padding-top: 4px;
+}
+
+.radio_wrapper input[type="radio"]:checked + label{
+  background-color: black;
+  color: white;
+}
+/*END Radiowrapper*/

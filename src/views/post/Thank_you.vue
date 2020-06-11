@@ -1,19 +1,22 @@
 <template>
-  <div id="main_activate">
-      <h1>Je bericht is geplaatst<br>
-          Dankjewel!</h1>
-  </div>
+  <postlayout>
+    <div id="main_activate">
+        <h1>Your post has been successfully shared on LinkedIn<br><br>
+            Thank you!</h1>
+    </div>
+  </postlayout>
 </template>
 
 <script>
+import postlayout from '../../layouts/post';
 
 export default {
   name: 'main_activate',
   components: {
-    
+    postlayout
   },
   methods:{
-      
+
   }
 }
 </script>
@@ -27,5 +30,7 @@ export default {
   color: #2c3e50;
   padding-top: 30vh;
   padding-bottom: 30vh;
+  max-width: 450px;
+  margin: auto;
 }
 </style>
