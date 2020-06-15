@@ -5,7 +5,7 @@
 </template>
 
 <style scoped>
-
+/* Niet nodig, dan weghalen */
 #dashboard_template {
   /* text-align: center;
   color: #2c3e50;

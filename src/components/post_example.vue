@@ -1,9 +1,11 @@
 |<template>
+  <!-- persoonlijk zou ik werken met een css methodiek zoals b.v. BEM. Deze css notatie is niet fout maar je moet je maar eens inlezen in BEM -->
   <div id="linkedin_container">
     <div class="preview">
         <div class="padding_wrapper">
             <div class="pf">in</div>
             <p class="heading_pf">LinkedIn Preview</p>
+            <!-- Waarom inline style? Probeer dit altijd met css op te lossen. Dat is een beter structuur en houdt de code schoner -->
            <p class="desc" style="white-space: pre-line;" v-html="preview_text(desc)"></p>
         </div>
         <a v-bind:href="url" target="_blank">
@@ -19,6 +21,16 @@
 
 <script>
   export default {
+    // Wat je nu mist bij deze type is de type definition. Het is duidelijker als je dit definieert. Je zou dan zoiets als dit krijgen:
+    // props: {
+    //   desc: {
+    //     type: String,
+    //     default: null,
+    //   },
+    // }
+    // Lees dit maar eens: https://vuejs.org/v2/style-guide/#Prop-definitions-essential
+
+
     props: ['desc','url','link_title','image'],
     methods: {
       preview_text(x){
@@ -58,6 +70,7 @@
 
 @media screen and (max-width: 1590px) {
 
+    /* Als dit niet gebruikt wordt zou ik dit altijd verwijderen */
     #linkedin_container{
         /* right: -320px; */
         /* max-width: 300px; */
