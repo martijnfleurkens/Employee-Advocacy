@@ -1,8 +1,9 @@
 |<template>
+  <!-- Als een id niet perse nodig is zou ik een class gebruiken. Stel dat je dit component ooit gaat hergebruiken levert dat geen problemen op -->
   <div id="newproposal_layout">
     <div id="margin_box">
       <div id="content_wrapper">
-        <slot/>
+        <slot />
       </div>
       <footer>
         <img src="../assets/valtech_logo.png" alt="Logo" class="logo">
