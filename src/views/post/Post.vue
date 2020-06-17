@@ -38,7 +38,7 @@
     </div>
   </postlayout>
     <!-- Preview -->
-    <postexample :desc="desc" :url="url" :image="image" :link_title="link_title"></postexample>
+    <postexample :desc="desc" :url="url" :image="image" :linkTitle="linkTitle"></postexample>
     <!-- END preview -->
   </div>
 </template>
@@ -89,7 +89,7 @@ export default {
         var db_data = response.data.Documents[0]
         this.db_desc_previews = db_data['desc'];
         this.url = db_data['url'];
-        this.link_title = db_data['link_title'];
+        this.linkTitle = db_data['linkTitle'];
         this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
 
       } catch(e) { console.error(e); }
@@ -105,7 +105,7 @@ export default {
         db_desc_previews: {},
         desc: '',
         url: '',
-        link_title: '',
+        linkTitle: '',
         image: '',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
@@ -157,7 +157,7 @@ export default {
                         ]
                     }
                 ],
-                "title": t.link_title,
+                "title": t.linkTitle,
                 // "landingPageUrl": "https://www.linkedin.com/",
                 // "description":"Hans hans",
             },

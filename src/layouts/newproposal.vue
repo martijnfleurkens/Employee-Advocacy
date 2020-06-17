@@ -1,8 +1,8 @@
 |<template>
   <!-- Als een id niet perse nodig is zou ik een class gebruiken. Stel dat je dit component ooit gaat hergebruiken levert dat geen problemen op -->
-  <div id="newproposal_layout">
-    <div id="margin_box">
-      <div id="content_wrapper">
+  <div class="newproposal_layout">
+    <div class="margin_box">
+      <div class="content_wrapper">
         <slot />
       </div>
       <footer>
@@ -14,14 +14,14 @@
 
 <style>
 
-#newproposal_layout {
+.newproposal_layout {
   position: absolute;
   height: 100%;
   width: 100%;
   background-color: #F6F6F6;
 }
 
-#margin_box{
+.margin_box{
   max-width: 1600px;
   margin: auto;
   padding: 5vh;
@@ -30,7 +30,7 @@
   box-sizing: border-box;
 }
 
-#newproposal_layout input[type="text"], textarea{
+.newproposal_layout input[type="text"], textarea{
   border: 1px solid black;
   padding: 5px 10px;
 }
@@ -39,7 +39,7 @@ input[type="submit"]{
 
 }
 
-#content_wrapper{
+.content_wrapper{
   background: white;
   height: 80%;
   padding: 60px 80px;

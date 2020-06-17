@@ -17,7 +17,7 @@
 
         <p class="form_element">
           <label for="form_subject">Article title</label>
-          <input type="text" v-model="link_title" required>
+          <input type="text" v-model="linkTitle" required>
         </p>
 
         <p class="form_element">
@@ -49,7 +49,7 @@
       </form>
 
     </div>
-      <postexample :desc="preview_desc" :url="url" :image="image" :link_title="link_title"></postexample>
+      <postexample :desc="preview_desc" :url="url" :image="image" :linkTitle="linkTitle"></postexample>
   </newproposallayout>
 </template>
 
@@ -73,7 +73,7 @@ export default {
         subject: '',
         preview_desc: '',
         url: '',
-        link_title: '',
+        linkTitle: '',
         image: require('../../assets/preview.png'),
         image_data: '',
         access_token: localStorage.getItem('access_token'),
@@ -116,7 +116,7 @@ export default {
       fd.append('image', this.image_data, this.image_data.name);
       fd.append('subject', this.subject);
       fd.append('url', this.url);
-      fd.append('link_title', this.link_title);
+      fd.append('linkTitle', this.linkTitle);
 
       var db_desc = '';
       var db_language = '';

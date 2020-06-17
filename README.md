@@ -1,5 +1,5 @@
 # Employee-Advocacy tool
-Advocacytool 
+Advocacytool, more info at <https://sem8.martijnfl.nl>
 
 ## Author
 [Martijn Fleurkens](mailto:martijnfleurkens@gmail.com)
@@ -21,7 +21,10 @@ Install extensions:
 | ------------------------  | --------------------------------------------------------------------------------------- |
 | Vetur                     | <https://marketplace.visualstudio.com/items?itemName=octref.vetur>                      |
 | EditorConfig              | <https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig>         |
-| vue                       | <https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue>         |
+| vue                       | <https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue>                     |
+| npm                       | <https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script>             |
+| Eslint                    | <https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint>            |
+| Prettier                  | <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>            |
 
 ### Browser devtools
 
