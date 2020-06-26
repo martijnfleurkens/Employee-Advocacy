@@ -4,52 +4,75 @@
       <h1>Make proposal</h1>
 
       <form @submit.prevent="nextPage">
-
         <p class="form_element">
           <label for="form_subject">Subject</label>
-          <input type="text" v-model="subject" required>
+          <input type="text" v-model="subject" required />
         </p>
 
         <p class="form_element">
           <label for="form_subject">Article link</label>
-          <input type="text" v-model="url" required>
+          <input type="text" v-model="url" required />
         </p>
 
         <p class="form_element">
           <label for="form_subject">Article title</label>
-          <input type="text" v-model="linkTitle" required>
+          <input type="text" v-model="linkTitle" required />
         </p>
 
         <p class="form_element">
           <label for="form_subject">Choose an image</label>
-          <input type="file" v-on:change="updatePreview" required>
+          <input type="file" v-on:change="updatePreview" required />
         </p>
 
         <div class="form_element">
           <label>Add text proposals</label>
-            <div v-for="(desc, index) of desc_previews" v-bind:key="desc.index" class="textarea_wrapper">
-              <textarea cols="37" rows="7" v-model="desc.text" v-on:focus="preview_desc_func(index)" v-on:keyup="preview_desc_func(index)" required></textarea>
-              <button v-on:click="removeTextarea(index)" class="cross">X</button>
+          <div
+            v-for="(desc, index) of desc_previews"
+            v-bind:key="desc.index"
+            class="textarea_wrapper"
+          >
+            <textarea
+              cols="37"
+              rows="7"
+              v-model="desc.text"
+              v-on:focus="preview_desc_func(index)"
+              v-on:keyup="preview_desc_func(index)"
+              required
+            ></textarea>
+            <button v-on:click="removeTextarea(index)" class="cross">X</button>
 
-                <!-- Language labels -->
-                <div class="radio_wrapper">
-                  <input type="radio" v-bind:name=" 'language_' + index" value="en" v-bind:id=" 'en_' + index" v-model="desc.language" checked>
-                  <label v-bind:for=" 'en_' + index">EN</label><br>
+            <!-- Language labels -->
+            <div class="radio_wrapper">
+              <input
+                type="radio"
+                v-bind:name=" 'language_' + index"
+                value="en"
+                v-bind:id=" 'en_' + index"
+                v-model="desc.language"
+                checked
+              />
+              <label v-bind:for=" 'en_' + index">EN</label>
+              <br />
 
-                  <input type="radio" v-bind:name=" 'language_' + index"  value="nl" v-bind:id=" 'nl_' + index" v-model="desc.language">
-                  <label v-bind:for=" 'nl_' + index">NL</label><br>
-                </div>
-                <!-- END Language labels -->
+              <input
+                type="radio"
+                v-bind:name=" 'language_' + index"
+                value="nl"
+                v-bind:id=" 'nl_' + index"
+                v-model="desc.language"
+              />
+              <label v-bind:for=" 'nl_' + index">NL</label>
+              <br />
             </div>
+            <!-- END Language labels -->
+          </div>
           <P v-on:click="addTextarea" id="add_btntext">+ Add proposal</P>
         </div>
 
-        <input type="submit" class="btn blue" value="next">
-
+        <input type="submit" class="btn blue" value="next" />
       </form>
-
     </div>
-      <postexample :desc="preview_desc" :url="url" :image="image" :linkTitle="linkTitle"></postexample>
+    <postexample :desc="preview_desc" :url="url" :image="image" :linkTitle="linkTitle"></postexample>
   </newproposallayout>
 </template>
 
@@ -145,16 +168,16 @@ export default {
 </script>
 
 <style>
-#margin_box{
+#margin_box {
   padding-right: 600px;
 }
 
-.textarea_wrapper{
+.textarea_wrapper {
   position: relative;
   display: table;
 }
 
-.cross{
+.cross {
   background: transparent;
   border: none;
   font-weight: bold;
@@ -164,19 +187,19 @@ export default {
   right: -30px;
 }
 
-.cross:hover{
+.cross:hover {
   cursor: pointer;
-  color: #00C8FF;
+  color: #00c8ff;
 }
 
-#add_btntext{
+#add_btntext {
   margin-top: 0px;
   font-weight: bold;
   font-size: 16px;
 }
 
-#add_btntext:hover{
+#add_btntext:hover {
   cursor: pointer;
-  color: #00C8FF;
+  color: #00c8ff;
 }
 </style>

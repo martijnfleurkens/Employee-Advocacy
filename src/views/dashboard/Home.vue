@@ -2,17 +2,21 @@
   <dashboardlayout>
     <div id="main_home">
       <h1>Dashboard</h1>
-      <router-link to="/dashboard/new_proposal" tag="button">+ new message proposal</router-link>
+      <router-link to="/dashboard/new_proposal" tag="button" class="btn">New proposal</router-link>
 
-      <table>
+      <table class="dashboard_table">
         <tr>
           <th>Subject</th>
           <th>Date</th>
+          <th></th>
         </tr>
 
         <tr v-for="data of db_data" v-bind:key="data.subject">
           <td>{{data.subject}}</td>
           <td>{{convertDate(data.date)}}</td>
+          <td>
+            <a target="_blank" :href="'/post/' + data.id">Link</a>
+          </td>
         </tr>
       </table>
     </div>
@@ -66,8 +70,23 @@ export default {
 }
 </script>
 
-<style>
-#main_activate {
+<style lang="postcss">
+.dashboard_table {
+  margin-top: 50px;
+  border-collapse: collapse;
 
+  & td,
+  th {
+    padding: 20px 40px;
+    border: 2px solid #f3f6f9;
+    background: white;
+  }
+
+  & th {
+    text-align: left;
+    background: black;
+    color: white;
+    padding: 10px 40px;
+  }
 }
 </style>

@@ -7,25 +7,25 @@
 /* HTML reset */
 html,
 body {
-    height: 100%;
-    margin: 0px;
+  height: 100%;
+  margin: 0px;
 }
 
 /* Fonts */
 @font-face {
-  font-family: 'clientfont';
-  src:
-    url('../assets/fonts/clientfont/clientfont.ttf?fwwfxy') format('truetype'),
-    url('../assets/fonts/clientfont/clientfont.woff?fwwfxy') format('woff'),
-    url('../assets/fonts/clientfont/clientfont.svg?fwwfxy#clientfont') format('svg');
+  font-family: "clientfont";
+  src: url("../assets/fonts/clientfont/clientfont.ttf?fwwfxy") format("truetype"),
+    url("../assets/fonts/clientfont/clientfont.woff?fwwfxy") format("woff"),
+    url("../assets/fonts/clientfont/clientfont.svg?fwwfxy#clientfont") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon_"], [class*=" icon_"] {
+[class^="icon_"],
+[class*=" icon_"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'clientfont' !important;
+  font-family: "clientfont" !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -43,6 +43,23 @@ body {
 }
 
 /* Pre-defined styles */
+.main_background {
+  color: #000000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background: #f2f5f8;
+  padding: 50px;
+  padding-bottom: 75px;
+  box-sizing: border-box;
+}
+
+.main_content_wrapper {
+  background: white;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.06);
+}
+
 .loader {
   border: 6px solid gray;
   border-radius: 50%;
@@ -55,40 +72,48 @@ body {
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.btn{
+.btn {
   font-size: 16px;
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 15px 60px;
-    cursor: pointer;
-    transition: 0.5s all ease-in-out;
-    font-weight: bold;
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 15px 60px;
+  cursor: pointer;
+  transition: 0.5s all ease-in-out;
+  font-weight: bold;
 }
 
-.btn:hover{
-    background-color: #00C8FF;
-    transition: 0.3s all ease-in-out;
+.btn:hover {
+  background-color: #00c8ff;
+  transition: 0.3s all ease-in-out;
 }
 
-.btn.blue{
-  background-color: #00C8FF;
+.btn.blue {
+  background-color: #00c8ff;
 }
 
-.btn.blue:hover{
+.btn.blue:hover {
   background-color: black;
 }
 
-.btn.center{
+.btn.center {
   display: table;
   margin: auto;
 }
@@ -115,26 +140,25 @@ body {
 }
 
 /* Radiowrapper */
-.radio_wrapper{
+.radio_wrapper {
   width: 100%;
   display: flex;
 }
 
-.radio_wrapper input[type="radio"]{
+.radio_wrapper input[type="radio"] {
   display: none;
 }
 
-.radio_wrapper label{
+.radio_wrapper label {
   border: 1px solid black;
   color: black;
   cursor: pointer;
   display: inline-block;
-  margin-right: 5px;
-  padding: 2px 8px;
+  padding: 2px 20px;
   padding-top: 4px;
 }
 
-.radio_wrapper input[type="radio"]:checked + label{
+.radio_wrapper input[type="radio"]:checked + label {
   background-color: black;
   color: white;
 }

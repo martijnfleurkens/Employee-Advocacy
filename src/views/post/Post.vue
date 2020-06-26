@@ -1,42 +1,59 @@
 <template>
-<div id="post_wrapper">
-  <postlayout>
-    <div id="main_post">
-      <div id="center_wrapper">
-              <div id="choose_desc_container">
-                  <p>Choose a description</p>
-                      <!-- Language labels -->
-                      <div class="radio_wrapper">
-                        <input type="radio" name="language" id="en" checked v-on:change="select_language('en')">
-                        <label for="en">EN</label><br>
+  <div id="post_wrapper">
+    <postlayout>
+      <div id="main_post">
+        <div id="center_wrapper">
+          <div id="choose_desc_container">
+            <div class="padding_container">
+              <p>Choose a description</p>
+              <!-- Language labels -->
+              <div class="radio_wrapper">
+                <input
+                  type="radio"
+                  name="language"
+                  id="en"
+                  checked
+                  v-on:change="select_language('en')"
+                />
+                <label for="en">EN</label>
+                <br />
 
-                        <input type="radio" name="language" id="nl" v-on:change="select_language('nl')">
-                        <label for="nl">NL</label><br>
-                      </div>
-                      <!-- END Language labels -->
-
-                    <!-- Descriptions -->
-                    <div v-for="desc_preview in desc_previews" :key="desc_preview" id="desc_preview" v-on:click="change_desc(desc_preview)">
-                      {{ desc_preview }}
-                    </div>
-                    <!-- <div v-on:click="change_desc('')" id="desc_preview"></div> -->
-                    <!-- END Descriptions -->
-
-                  <!-- <p>Edit the text or make it your own</p> -->
-                  <p>Edit the description or write your own</p>
-                  <div id="desc_edit">
-                      <textarea v-model="desc"></textarea>
-                      <!-- <p v-on:click="desc=''">X</p> -->
-                  </div>
+                <input type="radio" name="language" id="nl" v-on:change="select_language('nl')" />
+                <label for="nl">NL</label>
+                <br />
               </div>
+              <!-- END Language labels -->
 
+              <!-- Descriptions -->
+              <label
+                v-for="(desc_preview, index) in desc_previews"
+                :key="index"
+                class="desc_preview"
+                v-on:click="change_desc(desc_preview)"
+                :for="'desc_preview__radio_'+index"
+              >
+                <input type="radio" name="test" :id="'desc_preview__radio_' + index" />
+                <span class="radio_knob"></span>
+                {{ desc_preview }}
+              </label>
+              <!-- END Descriptions -->
+            </div>
 
+            <div class="padding_container">
+              <p>Edit the description or write your own</p>
+              <div id="desc_edit">
+                <textarea v-model="desc"></textarea>
+              </div>
+            </div>
+          </div>
 
-          <button id="share_btn" class="btn center" v-on:click="send_post" v-html="button_text"></button>
-          <p id="small_note"></p>
+          <div class="padding_container">
+            <button id="share_btn" class="btn center" v-on:click="post" v-html="button_text"></button>
+            <p id="small_note"></p>
+          </div>
+        </div>
       </div>
-    </div>
-  </postlayout>
+    </postlayout>
     <!-- Preview -->
     <postexample :desc="desc" :url="url" :image="image" :linkTitle="linkTitle"></postexample>
     <!-- END preview -->
@@ -52,6 +69,7 @@ import postexample from '../../components/post_example';
 export default {
   name: 'main_post',
   async created() {
+    var demo = true;
 
     var id = this.$route.params.id;
     localStorage.setItem('post_id',id);
@@ -63,10 +81,10 @@ export default {
 
     var now = new Date();
 
-    if (typeof access_token == "undefined" || access_token == null ||
+    if (demo == false && (typeof access_token == "undefined" || access_token == null ||
         typeof expire_date == "undefined" || expire_date == null ||
         typeof user_id == "undefined" || user_id == null ||
-        expire_date < now)
+        expire_date < now) )
     {
         this.$router.push('/activate');
     } else {
@@ -89,7 +107,7 @@ export default {
         var db_data = response.data.Documents[0]
         this.db_desc_previews = db_data['desc'];
         this.url = db_data['url'];
-        this.linkTitle = db_data['linkTitle'];
+        this.linkTitle = db_data['link_title'];
         this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
 
       } catch(e) { console.error(e); }
@@ -134,6 +152,52 @@ export default {
     },
     select_language(value){
       this.language = value;
+    },
+    post: async function() {
+          var id = this.$route.params.id;
+          localStorage.setItem('post_id',id);
+
+          var now = new Date();
+
+          //Check if linkedin is linked
+          var access_token = localStorage.getItem('access_token');
+          var expire_date = localStorage.getItem('expire_date');
+          var user_id = localStorage.getItem('user_id');
+
+            if (typeof access_token == "undefined" || access_token == null ||
+              typeof expire_date == "undefined" || expire_date == null ||
+              typeof user_id == "undefined" || user_id == null ||
+              expire_date < now)
+          {
+            this.authenticate('linkedin');
+          } else {
+            this.send_post();
+          }
+    },
+    authenticate: async function(provider) {
+      var t = this;
+      t.button_text = '<div class="loader"></div>';
+
+      this.$auth.authenticate(provider).then( function ( response ) {
+        // Execute application logic after successful social authentication
+        console.log(response);
+
+        //Get data from response
+        var expires_in = response['data']['expires_in'];
+        var access_token = response['data']['access_token'];
+        var user_id = response['data']['user_id'];
+
+        //Set expiring date
+        var current_date = new Date(new Date().getTime() + expires_in*1000);
+
+        // Set local storage
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('expire_date', current_date);
+        localStorage.setItem('user_id', user_id);
+
+        //Redirect to post
+        t.send_post();
+      });
     },
     send_post(){
 
@@ -197,16 +261,19 @@ export default {
         //Redirect to post
         this.$router.push('/thank_you');
     },
+    send_post_demo(){
+      //Redirect to post
+      this.$router.push('/thank_you');
+    }
   }
 }
 </script>
 
 <style>
-
-#small_note{
-    font-size: 12px;
-    color: rgb(107, 107, 107);
-    font-style: oblique;
+#small_note {
+  font-size: 12px;
+  color: rgb(107, 107, 107);
+  font-style: oblique;
 }
 
 #main_post {
@@ -220,72 +287,97 @@ export default {
   justify-content: center;
 }
 
-#choose_desc_container{
-    max-width: 300px;
-    margin: 0px 50px;
-    display: inline-block;
-    text-align: left;
+#choose_desc_container {
+  text-align: left;
 }
 
-#choose_desc_container p{
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 45px;
-    margin-bottom: 15px;
+#focus_wrapper .padding_container {
+  padding: 25px 80px;
+  border-bottom: 3px solid #f1f5f8;
 }
 
-#desc_preview{
-    border: 1px dashed #a3a3a3;
-    color: #707070;
-    padding: 15px;
-    text-align: left;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    background-color: white;
-    user-select: none;
+#choose_desc_container p {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 45px;
+  margin-bottom: 15px;
 }
 
-#choose_desc_container textarea{
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    padding: 15px;
+.desc_preview {
+  border: 1px dashed #a3a3a3;
+  color: #707070;
+  padding: 15px;
+  text-align: left;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  background-color: white;
+  display: block;
+  user-select: none;
 }
 
-#desc_preview:hover{
-    border: 1px solid #a3a3a3;
-    cursor: pointer;
+.desc_preview > input {
+  display: none;
 }
 
-#choose_desc_container p{
-    text-align: left;
+#choose_desc_container textarea {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 15px;
 }
 
-#choose_desc_container #textarea_wrapper{
-    position: relative;
+.desc_preview:hover {
+  border: 1px solid #a3a3a3;
+  cursor: pointer;
 }
 
-#choose_desc_container #textarea_wrapper p{
-    position: absolute;
-    right: 10px;
-    top: -7px;
-    font-weight: bold;
-    cursor: pointer;
+#choose_desc_container p {
+  text-align: left;
 }
 
-#choose_desc_container textarea{
-    width: 100%;
-    min-height: 140px;
-    max-width: 100%;
+#choose_desc_container #textarea_wrapper {
+  position: relative;
 }
 
-
-#share_btn{
-    margin-top: 20px;
+#choose_desc_container #textarea_wrapper p {
+  position: absolute;
+  right: 10px;
+  top: -7px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-#post_wrapper .radio_wrapper{
+#choose_desc_container textarea {
+  width: 100%;
+  min-height: 140px;
+  max-width: 100%;
+}
+
+#share_btn {
+  margin-top: 20px;
+}
+
+#post_wrapper .radio_wrapper {
   margin-bottom: 10px;
 }
 
+.radio_knob {
+  width: 13px;
+  height: 13px;
+  border: 2px solid black;
+  border-radius: 100px;
+  position: absolute;
+  margin-left: -55px;
+}
+
+input:checked ~ .radio_knob:after {
+  content: " ";
+  background: black;
+  width: 9px;
+  height: 9px;
+  display: block;
+  border-radius: 100px;
+  margin-top: 1.8px;
+  margin-left: 2.4px;
+}
 </style>

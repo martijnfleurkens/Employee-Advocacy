@@ -6,22 +6,21 @@
         <slot />
       </div>
       <footer>
-        <img src="../assets/valtech_logo.png" alt="Logo" class="logo">
+        <img src="../assets/valtech_logo.png" alt="Logo" class="logo" />
       </footer>
     </div>
   </div>
 </template>
 
 <style>
-
 .newproposal_layout {
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: #F6F6F6;
+  background: #f3f6f9;
 }
 
-.margin_box{
+.margin_box {
   max-width: 1600px;
   margin: auto;
   padding: 5vh;
@@ -30,47 +29,48 @@
   box-sizing: border-box;
 }
 
-.newproposal_layout input[type="text"], textarea{
+.newproposal_layout input[type="text"],
+textarea {
   border: 1px solid black;
   padding: 5px 10px;
 }
 
-input[type="submit"]{
-
+input[type="submit"] {
 }
 
-.content_wrapper{
+.content_wrapper {
   background: white;
   height: 80%;
   padding: 60px 80px;
-  overflow: auto
+  overflow: auto;
+  margin-right: 550px;
+  box-shadow: 1px 1px 4px -2px rgba(0, 0, 0, 0.81);
 }
 
-.form_element label{
+.form_element label {
   display: block;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
-.form_element span{
+.form_element span {
   color: gray;
   font-style: italic;
   display: block;
 }
 
-.form_element textarea{
+.form_element textarea {
   border: 1px solid black;
 }
 
-footer{
+footer {
   position: absolute;
   bottom: 20px;
 }
 
-footer .logo{
+footer .logo {
   height: 40px;
   margin: auto;
-  display: block
+  display: block;
 }
-
 </style>
