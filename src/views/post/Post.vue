@@ -68,54 +68,38 @@ import postexample from '../../components/post_example';
 
 export default {
   name: 'main_post',
-  async created() {
-    var demo = true;
-
-    var id = this.$route.params.id;
-    localStorage.setItem('post_id',id);
-
-    //Check if linkedin is linked
-    var access_token = localStorage.getItem('access_token');
-    var expire_date = localStorage.getItem('expire_date');
-    var user_id = localStorage.getItem('user_id');
-
-    var now = new Date();
-
-    if (demo == false && (typeof access_token == "undefined" || access_token == null ||
-        typeof expire_date == "undefined" || expire_date == null ||
-        typeof user_id == "undefined" || user_id == null ||
-        expire_date < now) )
-    {
-        this.$router.push('/activate');
-    } else {
-
-      axios.defaults.headers.common.authorization = null;
-      var rq_post_options = {
-        method: 'POST',
-        headers: {'header':{
-          'authorization': null
-        }},
-        url: 'https://prod-16.westeurope.logic.azure.com:443/workflows/74c7afaf5f4247f6970f27df9da8dd0c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tbLWes7w7a9YPDokj6gCySMztvzc9a6RomZiCGmSGJ8',
-        // data: qs.stringify({"id":id}),
-        data: {"id":id}
-      };
-
-      try {
-        const response = await axios(rq_post_options);
-        console.log(response);
-
-        var db_data = response.data.Documents[0]
-        this.db_desc_previews = db_data['desc'];
-        this.url = db_data['url'];
-        this.linkTitle = db_data['link_title'];
-        this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
-
-      } catch(e) { console.error(e); }
-    }
-  },
   components: {
     postlayout,
     postexample
+  },
+  async created() {
+
+    var id = this.$route.params.id;
+
+    axios.defaults.headers.common.authorization = null;
+    var rq_post_options = {
+      method: 'POST',
+      headers: {'header':{
+        'authorization': null
+      }},
+      url: 'https://prod-16.westeurope.logic.azure.com:443/workflows/74c7afaf5f4247f6970f27df9da8dd0c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tbLWes7w7a9YPDokj6gCySMztvzc9a6RomZiCGmSGJ8',
+      // data: qs.stringify({"id":id}),
+      data: {"id":id}
+    };
+
+    try {
+      const response = await axios(rq_post_options);
+      console.log(response);
+
+      var db_data = response.data.Documents[0]
+      this.db_desc_previews = db_data['desc'];
+      this.url = db_data['url'];
+      this.linkTitle = db_data['link_title'];
+      this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
+
+    } catch(e) {
+      console.error(e);
+    }
   },
   data: function () {
     return {
@@ -127,7 +111,7 @@ export default {
         image: '',
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
-        button_text: 'Share on LinkedIn',
+        button_text: '<i class="icon_linkedin"> </i> Share on LinkedIn',
         language: 'en'
     }
   },
@@ -269,7 +253,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss">
 #small_note {
   font-size: 12px;
   color: rgb(107, 107, 107);
@@ -355,6 +339,11 @@ export default {
 
 #share_btn {
   margin-top: 20px;
+  background: #0076b5;
+
+  &:hover {
+    background: black;
+  }
 }
 
 #post_wrapper .radio_wrapper {
