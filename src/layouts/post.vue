@@ -18,6 +18,7 @@
   max-width: 500px;
   margin: auto;
   max-height: 100%;
+  overflow-x: auto;
 }
 
 #focus_wrapper .footer {
@@ -33,7 +34,7 @@
   margin: auto;
 }
 
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1700px) {
   #post_wrapper #focus_wrapper {
     margin-right: 600px;
   }

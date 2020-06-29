@@ -30,6 +30,7 @@
     z-index: 2;
     height: 100%;
     width: calc(100% - 200px);
+    overflow: auto;
   }
 }
 </style>

@@ -300,7 +300,7 @@ export default {
   text-align: center;
   font-size: 16px;
   font-weight: bold;
-  margin-top: 45px;
+  margin-top: 25px;
   margin-bottom: 15px;
 }
 
@@ -379,5 +379,15 @@ input:checked ~ .radio_knob:after {
   border-radius: 100px;
   margin-top: 1.8px;
   margin-left: 2.4px;
+}
+
+@media screen and (max-height: 1010px) {
+  #focus_wrapper .padding_container {
+    padding: 15px 80px;
+  }
+
+  #choose_desc_container p {
+    margin-top: 15px;
+  }
 }
 </style>
