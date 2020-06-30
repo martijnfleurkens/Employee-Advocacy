@@ -64,7 +64,7 @@
 import axios from 'axios';
 import postlayout from '../../layouts/post';
 import postexample from '../../components/post_example';
-// import qs from 'qs';
+import setup from '../../../setup';
 
 export default {
   name: 'main_post',
@@ -73,7 +73,6 @@ export default {
     postexample
   },
   async created() {
-
     var id = this.$route.params.id;
 
     axios.defaults.headers.common.authorization = null;
@@ -82,9 +81,8 @@ export default {
       headers: {'header':{
         'authorization': null
       }},
-      url: 'https://prod-16.westeurope.logic.azure.com:443/workflows/74c7afaf5f4247f6970f27df9da8dd0c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tbLWes7w7a9YPDokj6gCySMztvzc9a6RomZiCGmSGJ8',
-      // data: qs.stringify({"id":id}),
-      data: {"id":id}
+      url: this.setup['azure']['logic']['get_proposal'],
+      data: {"id":id},
     };
 
     try {
@@ -95,7 +93,7 @@ export default {
       this.db_desc_previews = db_data['desc'];
       this.url = db_data['url'];
       this.linkTitle = db_data['link_title'];
-      this.image = "https://imgadvocacytool.blob.core.windows.net/shares/" + db_data['id'];
+      this.image = this.setup['azure']['blobUrl'] + db_data['id'];
 
     } catch(e) {
       console.error(e);
@@ -112,7 +110,8 @@ export default {
         access_token: localStorage.getItem('access_token'),
         user_id: localStorage.getItem('user_id'),
         button_text: '<i class="icon_linkedin"> </i> Share on LinkedIn',
-        language: 'en'
+        language: 'en',
+        setup: setup
     }
   },
   computed: {
@@ -155,6 +154,9 @@ export default {
           {
             this.authenticate('linkedin');
           } else {
+            //Set token
+            this.access_token = access_token;
+
             this.send_post();
           }
     },
@@ -179,6 +181,9 @@ export default {
         localStorage.setItem('expire_date', current_date);
         localStorage.setItem('user_id', user_id);
 
+        //Set token
+        this.access_token = access_token;
+
         //Redirect to post
         t.send_post();
       });
@@ -193,7 +198,7 @@ export default {
             "content": {
                 "contentEntities": [
                     {
-                        // "description":"Hans",
+                        // "description":"-",
                         "entityLocation": t.url,
                         "thumbnails": [
                             {   "imageSpecificContent":{
@@ -207,13 +212,13 @@ export default {
                 ],
                 "title": t.linkTitle,
                 // "landingPageUrl": "https://www.linkedin.com/",
-                // "description":"Hans hans",
+                // "description":"-",
             },
             "distribution": {
                 "linkedInDistributionTarget": {}
             },
             "owner": "urn:li:person:" + t.user_id,
-            // "subject": "Test Share via an API Subject",
+            // "subject": "-",
             "text": {
                 "text": t.desc
             }
@@ -227,7 +232,7 @@ export default {
 
         var post_options = {
             method: 'POST',
-            url: 'https://advocacytool.azurewebsites.net/api/Share_post?code=1N93LnYxYW1otksXUHAu0bdS2IKcrq7AMl6DjLCEfkmZxCl5OGA/KQ==',
+            url: this.setup['azure']['functions']['baseUrl'] + this.setup['azure']['functions']['share_post'],
             data: JSON.stringify(post_data),
             json: true
         };

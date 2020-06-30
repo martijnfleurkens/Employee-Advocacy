@@ -33,6 +33,7 @@ import newproposallayout from '../../layouts/newproposal.vue'
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 import { VueEditor } from "vue2-editor";
+import setup from '../../../setup';
 
 export default {
   name: 'main_activate',
@@ -45,7 +46,8 @@ export default {
     return {
         subject: '',
         desc: '',
-        adresses: ''
+        adresses: '',
+        setup: setup
     }
   },
   methods:{
@@ -58,8 +60,7 @@ export default {
 
         var post_options = {
             method: 'POST',
-            url: 'https://prod-61.westeurope.logic.azure.com:443/workflows/f7d7c441ce5547ae83f718fc60d162a8/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1zf3a2qGeC-_RgOnX_z8cKj7kDR6rJd0F89ixrPiru8',
-            // url: 'https://server.martijnfl.nl/test/api_test.php',
+            url: this.setup['azure']['logic']['api'],
             data: fd,
             headers:{
               'token': localStorage.token

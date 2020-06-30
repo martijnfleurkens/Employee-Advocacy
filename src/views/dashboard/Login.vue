@@ -4,25 +4,27 @@
       <h1>Login</h1>
       <p class="sub_title">Advocacy tool</p>
       <form @submit.prevent="submit">
-        <input type="text" placeholder="E-mailadress" v-model="username" required>
-        <input type="password" placeholder="Password" v-model="password" required>
-        <input type="submit" class="btn">
+        <input type="text" placeholder="E-mailadress" v-model="username" required />
+        <input type="password" placeholder="Password" v-model="password" required />
+        <input type="submit" class="btn" />
       </form>
       <p class="error">{{error_msg}}</p>
-      <img src="../../assets/valtech_logo.png" alt="Logo" class="logo">
+      <img src="../../assets/valtech_logo.png" alt="Logo" class="logo" />
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import setup from '../../../setup';
 
 export default {
    data: function () {
     return {
         username: '',
         password: '',
-        error_msg: ''
+        error_msg: '',
+        setup: setup
     }
   },
   methods:{
@@ -30,7 +32,7 @@ export default {
       console.log('test');
       var post_options = {
             method: 'POST',
-            url: 'https://advocacytool.azurewebsites.net/api/Login?code=weVIxxRn/GXgB43UyxHK2bY2X4RGZGtdNlfb0R/d5w6jHJbt5miv4w==',
+            url: this.setup['azure']['functions']['baseUrl'] + this.setup['azure']['functions']['login'],
             data: {
               "username": this.username,
               "password": this.password
@@ -60,36 +62,35 @@ export default {
 </script>
 
 <style scoped>
-
-#login_wrapper{
+#login_wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#login_container{
+#login_container {
   padding: 20px;
   margin-top: 25vh;
   min-width: 400px;
   position: relative;
 
- -webkit-box-shadow: 1px 1px 9px 10px rgba(250,250,250,1);
- -moz-box-shadow: 1px 1px 9px 10px rgba(250,250,250,1);
- box-shadow: 1px 1px 9px 10px rgba(250,250,250,1);
+  -webkit-box-shadow: 1px 1px 9px 10px rgba(250, 250, 250, 1);
+  -moz-box-shadow: 1px 1px 9px 10px rgba(250, 250, 250, 1);
+  box-shadow: 1px 1px 9px 10px rgba(250, 250, 250, 1);
 }
 
-#login_container h1{
+#login_container h1 {
   font-weight: 900;
   margin-bottom: 0px;
 }
 
-#login_container .sub_title{
+#login_container .sub_title {
   color: #929292;
   margin-top: 0px;
   font-size: 18px;
 }
 
-#login_container input{
+#login_container input {
   width: 100%;
   display: block;
   box-sizing: border-box;
@@ -100,7 +101,7 @@ export default {
   font-size: 14px;
 }
 
-#login_container .logo{
+#login_container .logo {
   margin: auto;
   position: absolute;
   bottom: -60px;
@@ -108,8 +109,7 @@ export default {
   margin: 0 calc(50% - 70px);
 }
 
-#login_container .error{
+#login_container .error {
   color: red;
 }
-
 </style>

@@ -1,3 +1,17 @@
 {
-  "baseUrl": "https://advocacytool.azurewebsites.net"
+  "azure": {
+    "functions": {
+      "baseUrl": "https://advocacytool.azurewebsites.net/api/",
+      "authentication": "Authentication?code=1yxSUhXyFDhabdnw5MUTf2IaR8g2HydquCWyZTzlrE/siYmJkMSYGQ==",
+      "login": "Login?code=weVIxxRn/GXgB43UyxHK2bY2X4RGZGtdNlfb0R/d5w6jHJbt5miv4w==",
+      "share_post": "Share_post?code=1N93LnYxYW1otksXUHAu0bdS2IKcrq7AMl6DjLCEfkmZxCl5OGA/KQ=="
+    },
+    "logic": {
+      "api": "https://prod-61.westeurope.logic.azure.com:443/workflows/f7d7c441ce5547ae83f718fc60d162a8/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1zf3a2qGeC-_RgOnX_z8cKj7kDR6rJd0F89ixrPiru8",
+      "get_all_proposals": "https://prod-47.westeurope.logic.azure.com:443/workflows/40c039c923cb4daa8899e8c4275b3e69/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_VGpYb-UlchrQxhaDwbDcAmJfJtQATuej5YtsLG1wio",
+      "get_proposal": "https://prod-16.westeurope.logic.azure.com:443/workflows/74c7afaf5f4247f6970f27df9da8dd0c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tbLWes7w7a9YPDokj6gCySMztvzc9a6RomZiCGmSGJ8"
+    },
+    "blobUrl": "https://imgadvocacytool.blob.core.windows.net/shares/"
+  },
+  "url": "http://localhost:8080"
 }

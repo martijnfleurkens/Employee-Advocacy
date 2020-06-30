@@ -55,7 +55,7 @@ Vue.use(VueAxios, axios);
 
 //VueAuthenticate
 Vue.use(VueAuthenticate, {
-  baseUrl: setup["authenticate_baseUrl"], // Your API domain
+  baseUrl: setup["azure"]["functions"]["baseUrl"], // Your API domain
   // baseUrl: "https://advocacytool.azurewebsites.net", // Your API domain
   tokenName: "access_token",
   tokenPath: "access_token",
@@ -63,12 +63,12 @@ Vue.use(VueAuthenticate, {
   providers: {
     linkedin: {
       clientId: "86h220n2vlk99q",
-      redirectUri: "http://localhost:8080/activate", // Your client app URL
+      redirectUri: setup["url"], // Your client app URL
       state: function () {
         return "!o!HH-Q991dF";
       },
       // url: '/api/HttpTrigger1',
-      url: "/api/Authentication?code=1yxSUhXyFDhabdnw5MUTf2IaR8g2HydquCWyZTzlrE/siYmJkMSYGQ==",
+      url: setup["azure"]["functions"]["authentication"],
       scope: ["r_liteprofile", "r_emailaddress", "w_member_social"], //r_member_social
       optionalUrlParams: ["scope", "state"],
     },

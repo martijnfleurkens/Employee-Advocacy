@@ -28,12 +28,14 @@
 <script>
 import dashboardlayout from '../../layouts/dashboard'
 import axios from 'axios';
+import setup from '../../../setup';
 
 export default {
   name: 'main_activate',
   data: function () {
     return {
-        db_data: [{ subject: "" }]
+        db_data: [{ subject: "" }],
+        setup: setup
     }
   },
   created(){
@@ -46,7 +48,7 @@ export default {
     async loadData(){
       var post_options = {
         method: 'POST',
-        url: 'https://prod-47.westeurope.logic.azure.com:443/workflows/40c039c923cb4daa8899e8c4275b3e69/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_VGpYb-UlchrQxhaDwbDcAmJfJtQATuej5YtsLG1wio',
+        url: this.setup['azure']['logic']['get_all_proposals'],
         data: {
               "token": localStorage.getItem('token')
             },
