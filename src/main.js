@@ -13,7 +13,6 @@ import App from "./views/App.vue";
 
 //routes
 import Post from "./views/post/Post.vue";
-import Activate from "./views/post/Activate.vue";
 import Thank_you from "./views/post/Thank_you.vue";
 
 //Dashboard routes
@@ -27,7 +26,6 @@ Vue.config.productionTip = false;
 //Vue router
 Vue.use(VueRouter);
 const routes = [
-  { path: "/activate", component: Activate },
   { path: "/post/:id", component: Post },
   { path: "/thank_you", component: Thank_you },
   { path: "/demo", redirect: "/post/ea9d719a-a1c3-4e67-b1b0-18346ef24f22" },

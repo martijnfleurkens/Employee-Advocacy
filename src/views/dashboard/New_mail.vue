@@ -4,10 +4,9 @@
       <h1>Prepare mail</h1>
 
       <form @submit.prevent="submit">
-
         <p class="form_element">
           <label for="form_subject">Mail subject</label>
-          <input type="text" v-model="subject" required>
+          <input type="text" v-model="subject" required />
         </p>
 
         <p class="form_element">
@@ -19,14 +18,12 @@
 
         <p class="form_element">
           <label for="form_subject">Mailadresses</label>
-          <input type="text" v-model="adresses" required>
+          <input type="text" v-model="adresses" required />
           <span>Split adresses by a comma(,)</span>
         </p>
 
-        <input type="submit" class="btn blue" value="next">
-
+        <input type="submit" class="btn blue" value="next" />
       </form>
-
     </div>
   </newproposallayout>
 </template>
@@ -64,6 +61,9 @@ export default {
             url: 'https://prod-61.westeurope.logic.azure.com:443/workflows/f7d7c441ce5547ae83f718fc60d162a8/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1zf3a2qGeC-_RgOnX_z8cKj7kDR6rJd0F89ixrPiru8',
             // url: 'https://server.martijnfl.nl/test/api_test.php',
             data: fd,
+            headers:{
+              'token': localStorage.token
+            },
             json: true
         };
 
@@ -85,10 +85,9 @@ export default {
 
 <style>
 #main_activate {
-
 }
 
-#margin_box{
+#margin_box {
   padding-right: 600px;
 }
 </style>
