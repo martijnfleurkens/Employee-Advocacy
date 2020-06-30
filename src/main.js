@@ -6,6 +6,7 @@ import VueAxios from "vue-axios";
 import VueAuthenticate from "vue-authenticate";
 import store from "./store";
 import VueGtag from "vue-gtag";
+import setup from "../setup";
 
 //Templates
 import App from "./views/App.vue";
@@ -56,7 +57,8 @@ Vue.use(VueAxios, axios);
 
 //VueAuthenticate
 Vue.use(VueAuthenticate, {
-  baseUrl: "https://advocacytool.azurewebsites.net", // Your API domain
+  baseUrl: setup["authenticate_baseUrl"], // Your API domain
+  // baseUrl: "https://advocacytool.azurewebsites.net", // Your API domain
   tokenName: "access_token",
   tokenPath: "access_token",
 
