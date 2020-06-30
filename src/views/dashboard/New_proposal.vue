@@ -139,7 +139,7 @@ export default {
       fd.append('image', this.image_data, this.image_data.name);
       fd.append('subject', this.subject);
       fd.append('url', this.url);
-      fd.append('linkTitle', this.linkTitle);
+      fd.append('link_title', this.linkTitle);
 
       var db_desc = '';
       var db_language = '';

@@ -138,6 +138,7 @@ export default {
     },
     post: async function() {
           var id = this.$route.params.id;
+          var t = this;
           localStorage.setItem('post_id',id);
 
           var now = new Date();
@@ -155,7 +156,7 @@ export default {
             this.authenticate('linkedin');
           } else {
             //Set token
-            this.access_token = access_token;
+            t.access_token = access_token;
 
             this.send_post();
           }
@@ -182,7 +183,7 @@ export default {
         localStorage.setItem('user_id', user_id);
 
         //Set token
-        this.access_token = access_token;
+        t.access_token = access_token;
 
         //Redirect to post
         t.send_post();
